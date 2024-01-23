@@ -1,0 +1,33 @@
+<!-- templates/result.html -->
+{% extends 'layout.html' %}
+
+ {% block header %} 
+ {% include 'nav.html' %} {%
+endblock %}
+ {% block content %}
+
+<div
+  class="container d-flex justify-content-center vh-100 text-center p-4 mt-4 flex-column"
+>
+  <h1>ผลการวินิจฉัย</h1>
+  <div class="row my-4">
+    <div class="col-6">
+      <img
+        src="{{ url_for('static', filename='img/' + img.filename) }}"
+        width="300"
+        class="shadow-sm"
+        height="auto"
+        alt="Uploaded Image"
+      />
+    </div>
+    <div class="col-6">
+      <p class="text-start">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure dolor
+        ullam laudantium quia fuga amet nobis saepe accusantium nihil at.
+        Nesciunt doloribus impedit eum vero quibusdam, reiciendis eveniet
+        repellendus architecto?
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block footer %} {% include 'footer.html' %} {% endblock %}

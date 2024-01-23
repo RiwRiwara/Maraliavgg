@@ -1,0 +1,30 @@
+<!-- templates/index.html -->
+
+{% extends 'layout.html' %}
+
+
+{% block header %}
+  {% include 'nav.html' %}
+{% endblock %}
+
+{% block content %}
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+<div class="container d-flex justify-content-center align-items-center text-center flex-column vh-100">
+  <h1>ระบบวินิฉัยโรคมาลาเรีย</h1>
+  <p>ยินดีต้อนรับสู่ระบบวินิฉัยโรคมาลาเรีย</p>
+    <form action="{{ url_for('defaultAPI.upload') }}" method="POST" enctype="multipart/form-data" class="d-flex gap-4">
+      <input type="file" name="file" accept="image/*" class="form-control border-2 border-warning">
+      <input type="submit" value="วินิฉัย" class="btn btn-warning fw-bold text-white">
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {% include 'footer.html' %}
+{% endblock %}
