@@ -1,22 +1,45 @@
 import torch
+import torchvision  
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
 
-# Check if CUDA (GPU) is available
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print("Device:", device)
-# Create a tensor on the GPU
-tensor_on_gpu = torch.rand(3, 3).to(device)
+Classes = [ 'Uninfected_Patients', 'Plasmodium_falciparum', 'Plasmodium_Vivax']
+class VGGModel(torch.nn.Module):
+    def __init__(self):
+        super(VGGModel, self).__init__()
 
-# Perform some operations on the GPU
-result = tensor_on_gpu + 1
+    def forward(self, x):
+        pass
 
-# Transfer the result back to the CPU if needed
-result_on_cpu = result.cpu()
+model = VGGModel()
+model_path = './Maraliavgg16.pt'  
+model = torch.jit.load(model_path, map_location=torch.device('cpu'))
+model.eval()
+print("Model loaded successfully!")
 
-print("Original Tensor on GPU:")
-print(tensor_on_gpu)
+# Define the transformation for a single image
+single_image_transform = transforms.Compose([
+    transforms.Resize((100, 100)),
+    transforms.ToTensor(),
+])
 
-print("Result on GPU:")
-print(result)
+# Load a single image
+image_path = './UNI.jpg'  # Replace with the path to your image
+image = Image.open(image_path).convert('RGB')
 
-print("Result on CPU:")
-print(result_on_cpu)
+# Apply the transformation
+input_tensor = single_image_transform(image)
+input_tensor = input_tensor.unsqueeze(0)  # Add batch dimension
+
+# Make a prediction
+with torch.no_grad():
+    output = model(input_tensor)
+    prediction = torch.argmax(output, dim=1).item()
+
+# Display the image with the predicted label
+plt.imshow(np.transpose(input_tensor.squeeze().numpy(), (1, 2, 0)))
+plt.axis('off')
+plt.title(f"Predicted Class: {Classes[prediction]}")
+plt.show()

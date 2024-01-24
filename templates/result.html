@@ -13,7 +13,7 @@ endblock %}
   <div class="row my-4">
     <div class="col-6">
       <img
-        src="{{ url_for('static', filename='img/' + img.filename) }}"
+        src="data:image/jpeg;base64,{{ img }}" 
         width="300"
         class="shadow-sm"
         height="auto"
@@ -22,10 +22,7 @@ endblock %}
     </div>
     <div class="col-6">
       <p class="text-start">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure dolor
-        ullam laudantium quia fuga amet nobis saepe accusantium nihil at.
-        Nesciunt doloribus impedit eum vero quibusdam, reiciendis eveniet
-        repellendus architecto?
+        {{predicted_class }}
       </p>
     </div>
   </div>
